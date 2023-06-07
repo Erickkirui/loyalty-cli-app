@@ -18,6 +18,8 @@ class Customer(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    phone = Column (String) 
+    email = Column(String)
     transactions = relationship("Transaction", back_populates="customer")
 
 
@@ -26,8 +28,6 @@ class Transaction(Base):
 
     id = Column(Integer, primary_key=True)
     customer_id = Column(Integer, ForeignKey('customers.id'))
-    point = Column(Integer)
-    amount = Column(Integer)
     transaction_date= Column(DateTime)
     customer = relationship("Customer", back_populates="transactions")
 
@@ -40,7 +40,7 @@ class Loyaltypoints(Base):
 
 
 
-
+Base.metadata.drop_all(engine)
 
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
