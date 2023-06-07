@@ -28,6 +28,9 @@ class Transaction(Base):
 
     id = Column(Integer, primary_key=True)
     customer_id = Column(Integer, ForeignKey('customers.id'))
+
+    point = Column(Integer)
+    amount = Column(Integer)
     transaction_date= Column(DateTime)
     customer = relationship("Customer", back_populates="transactions")
 
