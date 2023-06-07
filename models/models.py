@@ -3,7 +3,7 @@ import sys
 
 sys.path.append(os.getcwd)
 
-from sqlalchemy import (create_engine, PrimaryKeyConstraint, Column, String,Integer, ForeignKey)
+from sqlalchemy import (create_engine, PrimaryKeyConstraint, Column, String,Integer, ForeignKey, DateTime)
 # from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,relationship
@@ -27,7 +27,8 @@ class Transaction(Base):
     id = Column(Integer, primary_key=True)
     customer_id = Column(Integer, ForeignKey('customers.id'))
     point = Column(Integer)
-    
+    amount = Column(Integer)
+    transaction_date= Column(DateTime)
     customer = relationship("Customer", back_populates="transactions")
 
 class Loyaltypoints(Base):
