@@ -1,8 +1,7 @@
 ## About the app
-
-## About the app
-
 Group Project
 loyalty app
 This is a loyalty management cli app.
-Group Project1
+Group Project
+Final test
+
