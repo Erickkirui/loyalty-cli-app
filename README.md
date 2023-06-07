@@ -1,4 +1,8 @@
 ## About the app
 
+## About the app
+
 Group Project
- loyalty app
+loyalty app
+This is a loyalty management cli app.
+Group Project1
