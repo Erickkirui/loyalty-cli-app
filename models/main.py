@@ -15,6 +15,9 @@ WELCOME TO THE LOYALTY APP
     print("2. Add a transaction")
     print("3. View all customers")
     print("4. Delete customers")
+    print("5. Display loyal customer points")
+    print("6. See points for specific client")
+    print("7. Redeem points")
     print("0. Exit")
 
     
@@ -44,6 +47,15 @@ def main():
 
         elif choice == "4":
             Admin.delete_customer()
+
+        elif choice == "5":
+            Admin.display_loyalty_points()
+        
+        elif choice == "6":
+            Admin.display_loyalty_points()
+
+        elif choice == "7":
+            Admin.redeem_rewards()
         else:
             print("Invalid choice! Please try again.")
 
