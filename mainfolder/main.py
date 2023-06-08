@@ -1,9 +1,9 @@
-from customer_operations import Admin
+from functionalities import Admin
 
 x = 30 * '='
 
 def display_menu():
-    print(x)
+    
     print("""
 WELCOME TO THE LOYALTY APP
     """)
