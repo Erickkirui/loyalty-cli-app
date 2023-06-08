@@ -43,6 +43,17 @@ class Admin():
             print(tabulate(customer_data, headers=headers, tablefmt="fancy_grid"))
         else:
             print("No customers found!")
+    
+    # delete customer
+    def delete_customer():
+        customer_id = input("Enter customer ID to delete: ")
+        customer = session.query(Customer).get(customer_id)
+        if customer:
+            session.delete(customer)
+            session.commit()
+            print("Customer deleted successfully!")
+        else:
+            print("Customer not found!")
 
     
     
