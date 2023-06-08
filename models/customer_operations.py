@@ -43,12 +43,6 @@ class Admin():
             print(tabulate(customer_data, headers=headers, tablefmt="fancy_grid"))
         else:
             print("No customers found!")
-<<<<<<< HEAD
-
-    
-    
-
-=======
     
     # delete customer
     def delete_customer():
@@ -64,7 +58,6 @@ class Admin():
     
     
         # add transactions
->>>>>>> 568ef8f571d5a40cc4562d2a4e56ae631f8dc09d
     def add_transaction():
         customer_name = input("Enter customer name: ")
         amount = float(input("Enter transaction amount: "))
@@ -72,22 +65,6 @@ class Admin():
 
         customer = session.query(Customer).filter(Customer.name == customer_name).first()
         if customer:
-<<<<<<< HEAD
-            transaction = Transaction(amount=amount, transaction_date=transaction_date, customer=customer)
-            session.add(transaction)
-            session.commit()
-            print("Transaction added successfully!")
-
-            # Calculate loyalty points
-            points = int(amount / 100)  # 1 point for every 100 units
-            loyalty_entry = Loyaltypoints(customer_id=customer.name, point=points)
-            session.add(loyalty_entry)
-            session.commit()
-            print("Loyalty points added successfully!")
-        else:
-            print("Customer not found!")
-
-=======
             existing_transaction = session.query(Transaction).filter_by(customer_id=customer.id).first()
             if existing_transaction:
                 # Update the existing transaction amount
@@ -111,15 +88,52 @@ class Admin():
                 print(f"Loyalty points for {customer_name} updated successfully!")
             else:
                 # Create a new loyalty entry
-                loyalty_entry = Loyaltypoints(customer_id=customer.id, point=points)
+                loyalty_entry = Loyaltypoints(customer_id=customer.name, point=points)
                 session.add(loyalty_entry)
                 session.commit()
                 print("Loyalty points added successfully!")
         else:
             print("Customer not found!")
 
+      # diplay all loyaty point 
+    def display_loyalty_points():
+        loyalty_points = session.query(Customer.name, Loyaltypoints.point).join(Loyaltypoints).all()
+        if loyalty_points:
+            loyalty_points_data = []
+            for customer_name, points in loyalty_points:
+                loyalty_points_data.append([customer_name, points])
 
->>>>>>> 568ef8f571d5a40cc4562d2a4e56ae631f8dc09d
+            headers = ["Customer Name", "Points"]
+            print(tabulate(loyalty_points_data, headers=headers, tablefmt="fancy_grid"))
+        else:
+            print("No loyalty points found!")
+    # price redemption
+    def redeem_rewards():
+        customer_name = input("Enter customer name: ")
+        customer = session.query(Customer).filter_by(name=customer_name).first()
+        if customer:
+            loyalty_points = session.query(Loyaltypoints).filter_by(customer_id=customer.id).first()
+            if loyalty_points:
+                available_points = loyalty_points.point
+                if available_points > 0:
+                    print(f"Available points for {customer_name}: {available_points}")
+                    prize = input("Enter the prize you want to redeem: ")
+                    points_required = int(input("Enter the points required for the prize: "))
+                    if points_required <= available_points:
+                        loyalty_points.point -= points_required
+                        session.commit()
+                        print(f"{customer_name} redeemed {prize} successfully! {points_required} points deducted.")
+                    else:
+                        print("Insufficient points for redemption.")
+                else:
+                    print("No loyalty points available for redemption.")
+            else:
+                print("No loyalty points found for this customer.")
+        else:
+            print("Customer not found!")
+
+
+
     
  
  
