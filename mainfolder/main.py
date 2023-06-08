@@ -1,24 +1,26 @@
 from functionalities import Admin
 
+# from customer_operations import Admin
+from termcolor import colored
+
 x = 30 * '='
 
 def display_menu():
-    
-    print("""
+    print(x)
+    print(colored("""
 WELCOME TO THE LOYALTY APP
-    """)
+    ""","green"))
     print(x)
     print("  ")
-    print("What would you like to do: ")
+    print(colored("What would you like to do: ","green"))
     print("  ")
-    print("1. Add a customer")
-    print("2. Add a transaction")
-    print("3. View all customers")
-    print("4. Delete customers")
-    print("5. Display loyal customer points")
-    print("6. See points for specific client")
-    print("7. Redeem points")
-    print("0. Exit")
+    print(colored("1. Add a customer","cyan"))
+    print(colored("2. Add a transaction","cyan"))
+    print(colored("3. View all customers","cyan"))
+    print(colored("4. Delete customers","cyan"))
+    print(colored("6. Display points for  client","cyan"))
+    print(colored("7. Redeem points","cyan"))
+    print(colored("0. Exit","cyan"))
 
     
 
@@ -47,9 +49,6 @@ def main():
 
         elif choice == "4":
             Admin.delete_customer()
-
-        elif choice == "5":
-            Admin.display_loyalty_points()
         
         elif choice == "6":
             Admin.display_loyalty_points()
@@ -57,7 +56,7 @@ def main():
         elif choice == "7":
             Admin.redeem_rewards()
         else:
-            print("Invalid choice! Please try again.")
+            print(colored("Invalid choice! Please try again.","red"))
 
 
 if __name__ == "__main__":
