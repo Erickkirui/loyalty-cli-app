@@ -40,7 +40,7 @@ class Loyaltypoints(Base):
     point = Column(Integer)
 
 
-# delete tables
+#delete tables
 #Base.metadata.drop_all(engine)
 
 Base.metadata.create_all(engine)

@@ -85,7 +85,7 @@ class Admin():
                 # Update the existing loyalty points
                 existing_loyalty_entry.point += points
                 session.commit()
-                print("Loyalty points updated successfully!")
+                print(f"Loyalty points for {customer_name} updated successfully!")
             else:
                 # Create a new loyalty entry
                 loyalty_entry = Loyaltypoints(customer_id=customer.id, point=points)

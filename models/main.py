@@ -14,7 +14,7 @@ WELCOME TO THE LOYALTY APP
     print("1. Add a customer")
     print("2. Add a transaction")
     print("3. View all customers")
-    print("4. delete customers")
+    print("4. Delete customers")
     print("0. Exit")
 
     
