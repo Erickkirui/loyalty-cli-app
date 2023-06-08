@@ -3,33 +3,38 @@ from dbconnection import session
 from models import Customer, Transaction,Loyaltypoints
 from datetime import datetime
 from tabulate import tabulate
+from termcolor import colored 
 
+x = "=" * 30
 
 
 class Admin(): 
     # add customer 
     def add_customer():
-        # customer should not be able to enter null values
-        # if customer exist should not be able to added twice
+       
         
         name = input("Enter customer name: ")
         phone_number = input("Enter customer phone: ")
         email = input("Enter customer email: ")
 
         if name == "" or phone_number == "" or email == "":
-            print("Null values not allowed!")
+            print(colored("Null values not allowed!","red"))
             return
 
         existing_customer = session.query(Customer).filter_by(email=email).first()
         if existing_customer:
-            print(f"{name} already exists!")
+            print(x)
+            print(colored(f"{name} already exists!","red"))
+            print(x)
             return
         
     
         customer = Customer(name=name, phone_number=phone_number, email=email)
         session.add(customer)
         session.commit()
-        print(f"{name} has been added successfully!")
+        print(x)
+        print(colored(f"{name} has been added successfully!","green"))
+        print(x)
 
     # display customers
     def display_customers():
@@ -42,7 +47,9 @@ class Admin():
             headers = ["ID", "Name", "Phone Number", "Email"]
             print(tabulate(customer_data, headers=headers, tablefmt="fancy_grid"))
         else:
-            print("No customers found!")
+            print(x)
+            print(colored("No customers found!","red"))
+            print(x)
     
     # delete customer
     def delete_customer():
@@ -51,9 +58,13 @@ class Admin():
         if customer:
             session.delete(customer)
             session.commit()
-            print("Customer deleted successfully!")
+            print(x)
+            print(colored("Customer {name} deleted successfully!","green"))
+            print(x)
         else:
-            print("Customer not found!")
+            print(x)
+            print(colored("Customer not found!","red"))
+            print(x)
 
     
     
@@ -76,7 +87,9 @@ class Admin():
                 transaction = Transaction(amount=amount, transaction_date=transaction_date, customer=customer)
                 session.add(transaction)
                 session.commit()
-                print("Transaction added successfully!")
+                print(x)
+                print(colored("Transaction added successfully!","green"))
+                print(x)
 
             # Calculate loyalty points
             points = int(amount / 100)  # 1 point for every 100 units
@@ -85,13 +98,17 @@ class Admin():
                 # Update the existing loyalty points
                 existing_loyalty_entry.point += points
                 session.commit()
-                print(f"Loyalty points for {customer_name} updated successfully!")
+                print(x)
+                print(colored(f"Loyalty points for {customer_name} updated successfully!","green"))
+                print(x)
             else:
                 # Create a new loyalty entry
                 loyalty_entry = Loyaltypoints(customer_id=customer.name, point=points)
                 session.add(loyalty_entry)
                 session.commit()
-                print("Loyalty points added successfully!")
+                print(x)
+                print(colored("Loyalty points added successfully!","green"))
+                print(x)
         else:
             print("Customer not found!")
 
@@ -106,7 +123,9 @@ class Admin():
             headers = ["Customer Name", "Points"]
             print(tabulate(loyalty_points_data, headers=headers, tablefmt="fancy_grid"))
         else:
-            print("No loyalty points found!")
+            print(x)
+            print(colored("No loyalty points found!","red"))
+            print(x)
     # price redemption
     def redeem_rewards():
         customer_name = input("Enter customer name: ")
@@ -122,20 +141,22 @@ class Admin():
                     if points_required <= available_points:
                         loyalty_points.point -= points_required
                         session.commit()
-                        print(f"{customer_name} redeemed {prize} successfully! {points_required} points deducted.")
+                        print(x)
+                        print(colored(f"{customer_name} redeemed {prize} successfully! {points_required} points deducted.","green"))
+                        print(x)
                     else:
-                        print("Insufficient points for redemption.")
+                        print(x)
+                        print(colored("Insufficient points for redemption.","red"))
+                        print(x)
                 else:
-                    print("No loyalty points available for redemption.")
+                    print(x)
+                    print(colored("No loyalty points available for redemption.","red"))
+                    print(x)
             else:
-                print("No loyalty points found for this customer.")
+                print(x)
+                print(colored("No loyalty points found for this customer.","red"))
+                print(x)
         else:
+            print(x)
             print("Customer not found!")
-
-
-
-    
- 
- 
-
-
+            print(x)
