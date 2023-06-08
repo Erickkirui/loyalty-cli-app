@@ -46,7 +46,7 @@ class Admin():
 
     
     
-
+        # add transactions
     def add_transaction():
         customer_name = input("Enter customer name: ")
         amount = float(input("Enter transaction amount: "))
@@ -54,19 +54,36 @@ class Admin():
 
         customer = session.query(Customer).filter(Customer.name == customer_name).first()
         if customer:
-            transaction = Transaction(amount=amount, transaction_date=transaction_date, customer=customer)
-            session.add(transaction)
-            session.commit()
-            print("Transaction added successfully!")
+            existing_transaction = session.query(Transaction).filter_by(customer_id=customer.id).first()
+            if existing_transaction:
+                # Update the existing transaction amount
+                existing_transaction.amount += amount
+                session.commit()
+                print("Transaction amount updated successfully!")
+            else:
+                # Create a new transaction
+                transaction = Transaction(amount=amount, transaction_date=transaction_date, customer=customer)
+                session.add(transaction)
+                session.commit()
+                print("Transaction added successfully!")
 
             # Calculate loyalty points
             points = int(amount / 100)  # 1 point for every 100 units
-            loyalty_entry = Loyaltypoints(customer_id=customer.name, point=points)
-            session.add(loyalty_entry)
-            session.commit()
-            print("Loyalty points added successfully!")
+            existing_loyalty_entry = session.query(Loyaltypoints).filter_by(customer_id=customer.id).first()
+            if existing_loyalty_entry:
+                # Update the existing loyalty points
+                existing_loyalty_entry.point += points
+                session.commit()
+                print("Loyalty points updated successfully!")
+            else:
+                # Create a new loyalty entry
+                loyalty_entry = Loyaltypoints(customer_id=customer.id, point=points)
+                session.add(loyalty_entry)
+                session.commit()
+                print("Loyalty points added successfully!")
         else:
             print("Customer not found!")
+
 
     
  
