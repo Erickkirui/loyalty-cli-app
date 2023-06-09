@@ -67,7 +67,7 @@ class Admin():
             session.delete(customer)
             session.commit()
             print(x)
-            print(colored("Customer {name} deleted successfully!","green"))
+            print(colored(f"Customer deleted successfully!","green"))
             print(x)
         else:
             print(x)
@@ -173,3 +173,6 @@ class Admin():
             print(x)
             print("Customer not found!")
             print(x)
+
+    def show_version():
+        print(colored("Loyalty App Version 1.0","red"))

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, PrimaryKeyConstraint,CheckConstraint, UniqueConstraint, Column, String, Integer, ForeignKey, DateTime
+from sqlalchemy import create_engine, PrimaryKeyConstraint,CheckConstraint, UniqueConstraint, Column, String, Integer, ForeignKey, DateTime,CHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
@@ -16,7 +16,7 @@ class Customer(Base):
     )
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(CHAR('20'))
     phone_number = Column(String)
     email = Column(String)
     transactions = relationship("Transaction", back_populates="customer")
