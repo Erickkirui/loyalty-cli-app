@@ -51,7 +51,7 @@ def main():
             Admin.delete_customer()
         
         elif choice == "6":
-            Admin.display_loyalty_points()
+            Admin.display_loyalty_customers()
 
         elif choice == "7":
             Admin.redeem_rewards()

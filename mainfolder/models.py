@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, PrimaryKeyConstraint, UniqueConstraint, Column, String, Integer, ForeignKey, DateTime
+from sqlalchemy import create_engine, PrimaryKeyConstraint,CheckConstraint, UniqueConstraint, Column, String, Integer, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
@@ -11,11 +11,13 @@ class Customer(Base):
     __table_args__ = (
         PrimaryKeyConstraint('id', name='id_pk'),
         UniqueConstraint('email', 'name', name='uix_1'),
+        CheckConstraint("LENGTH(phone_number) >= 10", name="phone_length_check"),
+        CheckConstraint("email LIKE '%@gmail.com'", name="email_format_check"),
     )
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    phone_number = Column(Integer)
+    phone_number = Column(String)
     email = Column(String)
     transactions = relationship("Transaction", back_populates="customer")
 
@@ -41,7 +43,7 @@ class Loyaltypoints(Base):
 
 
 # delete tables
-# Base.metadata.drop_all(engine)
+#Base.metadata.drop_all(engine)
 
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
